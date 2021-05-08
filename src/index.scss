@@ -1,0 +1,40 @@
+@import "./pallete.scss";
+
+*,
+*::before,
+*::after {
+  font-family: "Montserrat", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  line-height: 28px;
+  color: $fontBlack;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  cursor: pointer;
+  border: 0;
+  outline: none;
+  transition: 0.08s linear;
+}
+
+input {
+  border: none;
+  outline: none;
+
+  &::placeholder {
+    color: $fontPlaceholder;
+    transition: 0.12s linear;
+  }
+
+  &:focus::placeholder {
+    opacity: 0;
+  }
+}
