@@ -9,8 +9,9 @@ const BgWrapper = styled.div`
   left: 0;
   width: 100%;
   height: 0;
-  padding-top: 41.67%;
+  padding-top: 56.25%;
   transform: translateY(-50%);
+  overflow: hidden;
 
   .videoplayer {
     position: absolute;
@@ -18,6 +19,7 @@ const BgWrapper = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
+    transform: scale3d(1.38, 1.38, 1);
   }
 
   &::after {

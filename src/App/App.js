@@ -14,6 +14,8 @@ const AppContainer = styled.div`
 export const App = () => {
   const [state, dispatch] = useReducer(appReducer, initialState);
 
+  console.log(state);
+
   return (
     <AppContainer>
       <Route

@@ -2,6 +2,9 @@ import styled from "styled-components";
 
 import { VideoBG } from "../Components/VideoBG/VideoBG";
 import { Search } from "../Components/Search/Search";
+import { SearchCard } from "../Components/SearchCard/SearchCard";
+
+import bgimage from "../../assets/images/cover.jpg";
 
 const SearchPageStyled = styled.div`
   display: flex;
@@ -12,6 +15,15 @@ const SearchPageStyled = styled.div`
   height: 100vh;
   padding: 22vh 0 0 0;
   background-color: ${(props) => props.colors.bgDark};
+
+  .tempbg {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    transform: translateY(-50%);
+    opacity: 0.3;
+  }
 
   .title {
     max-width: 728px;
@@ -34,18 +46,26 @@ const SearchPageStyled = styled.div`
     color: ${(props) => props.colors.fontWhiteFE};
     z-index: 20;
   }
+
+  .results {
+  }
 `;
 
 export const SearchPage = ({ state, dispatch }) => {
   return (
     <SearchPageStyled colors={state.pallete}>
-      {/* <VideoBG /> */}
+      <VideoBG />
+      {/* <img className="tempbg" src={bgimage} alt="" /> */}
 
       <div className="title">{state.ui.searchTitle}</div>
 
       <div className="subtitle">{state.ui.searchSubtitle}</div>
 
-      <Search state={state} />
+      <Search state={state} dispatch={dispatch} />
+
+      <div className="results">
+        <SearchCard />
+      </div>
     </SearchPageStyled>
   );
 };

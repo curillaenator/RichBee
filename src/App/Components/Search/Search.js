@@ -1,13 +1,15 @@
 import { Form, Field } from "react-final-form";
 import styled from "styled-components";
 
+import { getDataOnSearch } from "../../../Reducers/app";
+
 const FormStyled = styled.form`
   display: flex;
   align-items: center;
-  width: 38.5%;
-  max-width: 555px;
-  min-width: 440px;
+  flex-shrink: 0;
+  width: 555px;
   height: ${(props) => props.height}px;
+  margin-bottom: 20px;
   z-index: 20;
 
   .textinput {
@@ -34,25 +36,31 @@ const FormStyled = styled.form`
   }
 `;
 
-export const Search = ({ state }) => {
-  const onSubmit = (searchData) => console.log(searchData);
+export const Search = ({ state, dispatch }) => {
+  const onSubmit = (searchData) => getDataOnSearch(searchData.search, dispatch);
 
   return (
     <Form
       onSubmit={onSubmit}
-      render={({ handleSubmit, form, values }) => (
-        <FormStyled onSubmit={handleSubmit} height={50} colors={state.pallete}>
-          <Field
-            name="search"
-            component="input"
-            className="textinput"
-            autocomplete="off"
-            placeholder={state.ui.searchPlaceholder}
-          />
+      render={({ handleSubmit, form, values }) => {
+        return (
+          <FormStyled
+            onSubmit={handleSubmit}
+            height={50}
+            colors={state.pallete}
+          >
+            <Field
+              name="search"
+              component="input"
+              className="textinput"
+              autoComplete="off"
+              placeholder={state.ui.searchPlaceholder}
+            />
 
-          <button className="button">Search</button>
-        </FormStyled>
-      )}
+            <button className="button">Search</button>
+          </FormStyled>
+        );
+      }}
     ></Form>
   );
 };
