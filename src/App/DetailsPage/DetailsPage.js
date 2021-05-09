@@ -1,5 +1,12 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+
+import {
+  getDetailesOnTitle,
+  getPhotosOnTitle,
+  getAwardsOnTitle,
+} from "../../Reducers/app";
 
 import { RatingLabel } from "../Components/RatingLabel/RatingLabel";
 import { Button } from "../Components/Buttons/Button";
@@ -8,8 +15,19 @@ import { SimilarCard } from "../Components/SimilarCard/SimilarCard";
 import { model, colors } from "../../ui";
 
 import mglass from "../../assets/icons/mglass.svg";
-import bgmage from "../../assets/images/cover.jpg";
 
+const TagStyled = styled.div`
+  padding: 0 24px;
+  border-right: 2px solid ${colors.fontWhiteFB};
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 29px;
+  color: ${colors.fontWhiteFB};
+
+  &:last-child {
+    border-right: 0;
+  }
+`;
 const HeaderSection = styled.section`
   display: flex;
   justify-content: space-between;
@@ -46,7 +64,6 @@ const HeaderSection = styled.section`
     }
   }
 `;
-
 const PreviewSection = styled.section`
   display: flex;
   flex-direction: column;
@@ -55,14 +72,15 @@ const PreviewSection = styled.section`
   padding: 120px 150px 100px;
   height: calc(100vh - 100px);
   min-height: 760px;
-  background-image: url(${(props) => props.image});
+  background: linear-gradient(90.3deg, #111111 19%, rgba(17, 17, 17, 0) 99.75%),
+    url(${(props) => props.image});
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
 
   .block {
     &_label {
-      max-width: calc(100% / 2);
+      max-width: 70%;
       min-width: 555px;
       margin-bottom: 30px;
       font-size: 72px;
@@ -74,17 +92,13 @@ const PreviewSection = styled.section`
     &_tagline {
       display: flex;
       align-items: center;
-      font-weight: 600;
-      font-size: 24px;
-      line-height: 29px;
-      color: ${colors.fontWhiteFB};
     }
 
     &_buttons {
       margin-bottom: 50px;
     }
 
-    &_info {
+    &_awards {
       max-width: calc(100% / 2 - 150px);
       min-width: 400px;
       font-size: 18px;
@@ -94,7 +108,6 @@ const PreviewSection = styled.section`
     }
   }
 `;
-
 const ExtendedSection = styled.section`
   width: 100%;
   padding: 60px 150px;
@@ -140,7 +153,6 @@ const ExtendedSection = styled.section`
     }
   }
 `;
-
 const FooterSection = styled.section`
   display: flex;
   justify-content: center;
@@ -154,13 +166,31 @@ const FooterSection = styled.section`
 
   color: ${colors.fontWhiteFE};
 `;
-
 const DetailsPageStyled = styled.div`
   min-width: 1280px;
 `;
 
 export const DetailsPage = ({ state, dispatch }) => {
+  const { curDetails, photos, awards } = state;
   const { id } = useParams();
+
+  const maxResolution = Math.max.apply(
+    null,
+    photos.images.map((p) => p.width)
+  );
+
+  const bestPhoto = photos.images.find((p) => p.width === maxResolution);
+
+  useEffect(() => {
+    if(id) {
+      getDetailesOnTitle(id, dispatch);
+      getPhotosOnTitle(id, dispatch);
+      getAwardsOnTitle(id, dispatch);
+    }
+  }, [id, dispatch]);
+
+  if (!curDetails || !photos || !awards) return <div>Загрузка...</div>;
+
   return (
     <DetailsPageStyled>
       <HeaderSection>
@@ -171,13 +201,20 @@ export const DetailsPage = ({ state, dispatch }) => {
         </div>
       </HeaderSection>
 
-      <PreviewSection image={bgmage}>
+      <PreviewSection image={bestPhoto.url}>
         <div className="block">
-          <div className="block_label">The Queen's Gambit</div>
+          <div className="block_label">{curDetails.title.title}</div>
 
           <div className="block_tagline">
-            <RatingLabel />
-            <div className="tags">Drama | TVSeries | 2020</div>
+            <RatingLabel rating={curDetails.ratings.rating} />
+
+            <TagStyled>{curDetails.title.titleType}</TagStyled>
+
+            {curDetails.genres.map((genre) => (
+              <TagStyled key={genre}>{genre}</TagStyled>
+            ))}
+
+            <TagStyled>{curDetails.title.year}</TagStyled>
           </div>
         </div>
 
@@ -186,9 +223,14 @@ export const DetailsPage = ({ state, dispatch }) => {
             <Button title="Watch" />
           </div>
 
-          <div className="block_info">
-            Top Rated TV #148 | Won 2 Golden Globes. Another 12 wins & 19
-            nominations.
+          <div className="block_awards">
+            {`${awards.awardsSummary.highlighted.isWinner ? "Won" : ""} ${
+              awards.awardsSummary.highlighted.awardName
+            } | ${
+              awards.awardsSummary.highlighted.count
+            } ${"Nominations"}`}{" "}
+            <br />
+            {`Another ${awards.awardsSummary.otherWinsCount} wins & ${awards.awardsSummary.otherNominationsCount} nominations`}
           </div>
         </div>
       </PreviewSection>
@@ -196,20 +238,10 @@ export const DetailsPage = ({ state, dispatch }) => {
       <ExtendedSection>
         <div className="description">
           <div className="description_label">
-            Watch The Queen's Gambit on Richbee Shows
+            {`Watch ${curDetails.title.title} on Richbee Shows`}
           </div>
 
-          <div className="description_text">
-            Nine year-old orphan Beth Harmon is quiet, sullen, and by all
-            appearances unremarkable. That is, until she plays her first game of
-            chess. Her senses grow sharper, her thinking clearer, and for the
-            first time in her life she feels herself fully in control. By the
-            age of sixteen, she's competing for the U.S. Open championship. But
-            as Beth hones her skills on the professional circuit, the stakes get
-            higher, her isolation grows more frightening, and the thought of
-            escape becomes all the more tempting. Based on the book by Walter
-            Tevis.
-          </div>
+          <div className="description_text">{curDetails.plotSummary.text}</div>
         </div>
 
         <div className="similar">

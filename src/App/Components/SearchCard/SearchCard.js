@@ -82,7 +82,7 @@ const LinkStyled = styled(Link)`
 export const SearchCard = ({ data }) => {
   return (
     <LinkStyled to={`/details/${data.id}`}>
-      <img className="cover" src={data.i.imageUrl} alt="Cover" />
+      <img className="cover" src={data.i ? data.i.imageUrl : ""} alt="Cover" />
 
       <div className="info">
         <div className="filmtitle">{data.l}</div>
@@ -91,7 +91,7 @@ export const SearchCard = ({ data }) => {
       </div>
 
       <div className="rating">
-        <RatingLabel rating="IMDb 8.8" />
+        <RatingLabel rating="8.8" />
       </div>
     </LinkStyled>
   );

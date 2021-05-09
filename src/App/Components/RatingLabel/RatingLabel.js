@@ -15,4 +15,6 @@ const RatingWrap = styled.div`
   color: ${colors.fontVantaBlack};
 `;
 
-export const RatingLabel = ({ rating }) => <RatingWrap>{rating}</RatingWrap>;
+export const RatingLabel = ({ rating }) => (
+  <RatingWrap>{`IMDb ${rating}`}</RatingWrap>
+);

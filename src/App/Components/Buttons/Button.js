@@ -18,10 +18,12 @@ const StyledButton = styled.button`
 
   &:hover {
     background-color: ${colors.bgDarkGray};
+    transform: scale3d(1.04, 1.04, 1);
   }
 
   &:active {
     background-color: ${colors.bgDark};
+    transform: scale3d(1, 1, 1);
   }
 `;
 
