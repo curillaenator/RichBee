@@ -8,11 +8,21 @@ const StyledButton = styled.button`
   padding: 0 69px;
   border: 2px solid ${colors.fontWhiteFB};
   border-radius: 32px;
-  background: ${colors.bgDark};
+  background-color: ${colors.bgDark};
   font-size: 18px;
   font-weight: 600;
   line-height: 18px;
   color: ${colors.fontWhiteFB};
+  opacity: 0.8;
+  transition: 0.08s linear;
+
+  &:hover {
+    background-color: ${colors.bgDarkGray};
+  }
+
+  &:active {
+    background-color: ${colors.bgDark};
+  }
 `;
 
 export const Button = ({

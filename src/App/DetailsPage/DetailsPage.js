@@ -3,8 +3,9 @@ import styled from "styled-components";
 
 import { RatingLabel } from "../Components/RatingLabel/RatingLabel";
 import { Button } from "../Components/Buttons/Button";
+import { SimilarCard } from "../Components/SimilarCard/SimilarCard";
 
-import { colors } from "../../ui";
+import { model, colors } from "../../ui";
 
 import mglass from "../../assets/icons/mglass.svg";
 import bgmage from "../../assets/images/cover.jpg";
@@ -53,6 +54,7 @@ const PreviewSection = styled.section`
   width: 100%;
   padding: 120px 150px 100px;
   height: calc(100vh - 100px);
+  min-height: 760px;
   background-image: url(${(props) => props.image});
   background-size: cover;
   background-repeat: no-repeat;
@@ -95,8 +97,6 @@ const PreviewSection = styled.section`
 
 const ExtendedSection = styled.section`
   width: 100%;
-  height: 100vh;
-
   padding: 60px 150px;
   background-color: ${colors.bgWhite};
 
@@ -122,10 +122,38 @@ const ExtendedSection = styled.section`
   }
 
   .similar {
+    &_label {
+      width: 100%;
+      max-width: 800px;
+      min-width: 555px;
+      margin-bottom: 19px;
+      font-weight: 900;
+      font-size: 24px;
+      line-height: 52px;
+      color: ${colors.fontBlack};
+    }
+
+    &_cards {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+    }
   }
 `;
 
-const FooterSection = styled.section``;
+const FooterSection = styled.section`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100px;
+  padding: 0 150px;
+  font-weight: 900;
+  font-size: 18px;
+  line-height: 22px;
+
+  color: ${colors.fontWhiteFE};
+`;
 
 const DetailsPageStyled = styled.div`
   min-width: 1280px;
@@ -184,10 +212,18 @@ export const DetailsPage = ({ state, dispatch }) => {
           </div>
         </div>
 
-        <div className="similar"></div>
+        <div className="similar">
+          <div className="similar_label">{model.detailsPage.similar}</div>
+
+          <div className="similar_cards">
+            {[1, 2, 3, 4].map((data) => (
+              <SimilarCard key={data} />
+            ))}
+          </div>
+        </div>
       </ExtendedSection>
 
-      <section className="footer"></section>
+      <FooterSection className="footer">Richbee Shows</FooterSection>
     </DetailsPageStyled>
   );
 };
