@@ -36,7 +36,7 @@ const FormStyled = styled.form`
   }
 `;
 
-export const Search = ({ state, dispatch }) => {
+export const Search = ({ dispatch, colors, placeholder }) => {
   const onSubmit = (searchData) => getDataOnSearch(searchData.search, dispatch);
 
   return (
@@ -47,14 +47,14 @@ export const Search = ({ state, dispatch }) => {
           <FormStyled
             onSubmit={handleSubmit}
             height={50}
-            colors={state.pallete}
+            colors={colors}
           >
             <Field
               name="search"
               component="input"
               className="textinput"
               autoComplete="off"
-              placeholder={state.ui.searchPlaceholder}
+              placeholder={placeholder}
             />
 
             <button className="button">Search</button>

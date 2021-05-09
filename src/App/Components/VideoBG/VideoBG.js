@@ -1,25 +1,27 @@
+import { useState, useEffect } from "react";
 import ReactPlayer from "react-player/youtube";
 import styled from "styled-components";
 
-//padding-top: 41.67%;
-
 const BgWrapper = styled.div`
-  position: absolute;
-  top: 50%;
+  position: fixed;
+  top: 0;
   left: 0;
-  width: 100%;
-  height: 0;
-  padding-top: 56.25%;
-  transform: translateY(-50%);
+  width: 100vw;
+  height: 100vh;
   overflow: hidden;
 
-  .videoplayer {
+  .scale {
     position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    transform: scale3d(1.38, 1.38, 1);
+    left: 50%;
+    width: ${(props) => 1.78 * props.height}px;
+    height: ${(props) => props.height}px;
+    transform: translateX(-50%) scale(1.35);
+
+    .videoplayer {
+      width: 100%;
+      height: 100%;
+    }
   }
 
   &::after {
@@ -36,32 +38,42 @@ const BgWrapper = styled.div`
 `;
 
 export const VideoBG = () => {
+  const [height, setHeight] = useState(window.innerHeight);
+
+  useEffect(() => {
+    const heighter = () => setHeight(window.innerHeight);
+
+    window.addEventListener("resize", heighter);
+    return () => window.removeEventListener("resize", heighter);
+  }, []);
+
   return (
-    <BgWrapper>
-      <ReactPlayer
-        className="videoplayer"
-        url="https://www.youtube.com/watch?v=gA0nQyDZR4A"
-        width="100%"
-        height="100%"
-        playing
-        muted
-        loop
-        // onReady={onReady}
-        config={{
-          youtube: {
-            playerVars: {
-              rel: 0,
-              showinfo: 0,
-              frameborder: 0,
-              iv_load_policy: 3,
-              keyboard: 1,
-              autohide: 1,
-              modestbranding: 1,
-              fs: 0,
+    <BgWrapper height={height}>
+      <div className="scale">
+        <ReactPlayer
+          className="videoplayer"
+          url="https://www.youtube.com/watch?v=gA0nQyDZR4A"
+          width="100%"
+          height="100%"
+          // playing
+          muted
+          loop
+          config={{
+            youtube: {
+              playerVars: {
+                rel: 0,
+                showinfo: 0,
+                frameborder: 0,
+                iv_load_policy: 3,
+                keyboard: 1,
+                autohide: 1,
+                modestbranding: 1,
+                fs: 0,
+              },
             },
-          },
-        }}
-      />
+          }}
+        />
+      </div>
     </BgWrapper>
   );
 };

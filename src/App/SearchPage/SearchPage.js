@@ -3,8 +3,7 @@ import styled from "styled-components";
 import { VideoBG } from "../Components/VideoBG/VideoBG";
 import { Search } from "../Components/Search/Search";
 import { SearchCard } from "../Components/SearchCard/SearchCard";
-
-import bgimage from "../../assets/images/cover.jpg";
+import { model, colors } from "../../ui";
 
 const SearchPageStyled = styled.div`
   display: flex;
@@ -12,9 +11,9 @@ const SearchPageStyled = styled.div`
   align-items: center;
   position: relative;
   width: 100vw;
-  height: 100vh;
-  padding: 22vh 0 0 0;
-  background-color: ${(props) => props.colors.bgDark};
+
+  padding: 22vh 0;
+  background-color: ${colors.bgDark};
 
   .tempbg {
     position: absolute;
@@ -32,7 +31,7 @@ const SearchPageStyled = styled.div`
     font-size: 64px;
     line-height: 78px;
     text-align: center;
-    color: ${(props) => props.colors.fontWhiteFE};
+    color: ${colors.fontWhiteFE};
     z-index: 20;
   }
 
@@ -43,29 +42,47 @@ const SearchPageStyled = styled.div`
     font-size: 36px;
     line-height: 52px;
     text-align: center;
-    color: ${(props) => props.colors.fontWhiteFE};
+    color: ${colors.fontWhiteFE};
+    z-index: 20;
+  }
+
+  .matches {
+    margin-bottom: 20px;
+    color: ${colors.fontWhiteFE};
     z-index: 20;
   }
 
   .results {
+    z-index: 20;
   }
 `;
 
 export const SearchPage = ({ state, dispatch }) => {
   return (
-    <SearchPageStyled colors={state.pallete}>
+    <SearchPageStyled>
       <VideoBG />
-      {/* <img className="tempbg" src={bgimage} alt="" /> */}
 
-      <div className="title">{state.ui.searchTitle}</div>
+      <div className="title">{model.searchPage.title}</div>
 
-      <div className="subtitle">{state.ui.searchSubtitle}</div>
+      <div className="subtitle">{model.searchPage.subtitle}</div>
 
-      <Search state={state} dispatch={dispatch} />
+      <Search
+        dispatch={dispatch}
+        colors={colors}
+        placeholder={model.searchPage.placeholder}
+      />
 
-      <div className="results">
-        <SearchCard />
-      </div>
+      {state.searchRes && (
+        <div className="matches">{`${state.searchRes.d.length} ${model.searchPage.found} "${state.searchRes.q}"`}</div>
+      )}
+
+      {state.searchRes && (
+        <div className="results">
+          {state.searchRes.d.map((data) => (
+            <SearchCard key={data.id} data={data} />
+          ))}
+        </div>
+      )}
     </SearchPageStyled>
   );
 };

@@ -1,34 +1,15 @@
 import axios from "axios";
 
-const SET_DATA = "app/SET_DATA";
+const SET_SEARCH = "app/SET_DATA";
 
 export const initialState = {
-  pallete: {
-    bgDark: "#111111",
-    bgDarkGray: "#1b1919",
-    bgWhite: "#ffffff",
-    bgRating: "#fac539",
-    bgButton: "#4ea7f9",
-    bgButtonHover: "#2093ff",
-    fontBlack: "#323232",
-    fontDark: "#312e2e",
-    fontGray: "#5f5f5f",
-    fontWhiteFE: "#fefefe",
-    fontWhiteFB: "#fbfbfb",
-    fontPlaceholder: "#cccccc",
-  },
-  ui: {
-    searchTitle: "Unlimited movies, TV shows, and more.",
-    searchSubtitle: "Watch anywhere. Cancel anytime.",
-    searchPlaceholder: "Type here smth...",
-  },
-  data: null,
+  searchRes: null,
 };
 
 export const appReducer = (state, action) => {
   switch (action.type) {
-    case SET_DATA:
-      return { ...state, data: action.payload };
+    case SET_SEARCH:
+      return { ...state, searchRes: action.payload };
 
     default:
       return state;
@@ -37,7 +18,7 @@ export const appReducer = (state, action) => {
 
 // ACTIONS
 
-export const setData = (payload) => ({ type: SET_DATA, payload });
+export const setSearchRes = (payload) => ({ type: SET_SEARCH, payload });
 
 // REQUESTS
 
@@ -54,9 +35,6 @@ export const getDataOnSearch = (query, dispatch) => {
 
   axios
     .request(options)
-    .then((res) => {
-      dispatch(setData(res.data));
-      console.log(res.data);
-    })
+    .then((res) => dispatch(setSearchRes(res.data)))
     .catch((err) => console.error(err));
 };
