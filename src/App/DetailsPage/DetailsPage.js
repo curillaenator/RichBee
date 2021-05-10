@@ -1,20 +1,35 @@
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import styled from "styled-components";
+import { useHistory, useParams } from "react-router-dom";
+import Popup from "reactjs-popup";
+import styled, { keyframes } from "styled-components";
 
 import {
-  getDetailesOnTitle,
-  getPhotosOnTitle,
-  getAwardsOnTitle,
+  getFullDetails,
+  getVideosOnModal,
+  tempSwitch,
 } from "../../Reducers/app";
 
+import { Loader } from "../Components/Loader/Loader";
+import { Modal } from "../Components/Modal/Modal";
 import { RatingLabel } from "../Components/RatingLabel/RatingLabel";
-import { Button } from "../Components/Buttons/Button";
 import { SimilarCard } from "../Components/SimilarCard/SimilarCard";
 
 import { model, colors } from "../../ui";
 
 import mglass from "../../assets/icons/mglass.svg";
+
+// ANIMATIONS
+
+const modalAppear = keyframes`
+from {
+  opacity: 0;
+}
+to {
+  opacity: 1;
+}
+`;
+
+// STYLES
 
 const TagStyled = styled.div`
   padding: 0 24px;
@@ -26,6 +41,46 @@ const TagStyled = styled.div`
 
   &:last-child {
     border-right: 0;
+  }
+`;
+const StyledButton = styled.button`
+  display: flex;
+  align-items: center;
+  height: 64px;
+  padding: 0 69px;
+  border: 2px solid ${colors.fontWhiteFB};
+  border-radius: 32px;
+  background-color: ${colors.bgDark};
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 18px;
+  color: ${colors.fontWhiteFB};
+  opacity: 0.8;
+  transition: 0.08s linear;
+
+  &:hover {
+    background-color: ${colors.bgDarkGray};
+    transform: scale3d(1.04, 1.04, 1);
+  }
+
+  &:active {
+    background-color: ${colors.bgDark};
+    transform: scale3d(1, 1, 1);
+  }
+`;
+const StyledPopup = styled(Popup)`
+  &-overlay {
+    width: 100vw;
+    height: 100vh;
+    background-color: ${colors.cardHover};
+    animation: ${modalAppear} 0.12s linear;
+  }
+
+  &-content {
+    width: 70%;
+    padding: 24px;
+    border-radius: 16px;
+    background-color: ${colors.cardActive};
   }
 `;
 const HeaderSection = styled.section`
@@ -71,7 +126,7 @@ const PreviewSection = styled.section`
   width: 100%;
   padding: 120px 150px 100px;
   height: calc(100vh - 100px);
-  min-height: 760px;
+  min-height: 830px;
   background: linear-gradient(90.3deg, #111111 19%, rgba(17, 17, 17, 0) 99.75%),
     url(${(props) => props.image});
   background-size: cover;
@@ -170,26 +225,37 @@ const DetailsPageStyled = styled.div`
   min-width: 1280px;
 `;
 
+// MAIN COMPONENT
+
 export const DetailsPage = ({ state, dispatch }) => {
-  const { curDetails, photos, awards } = state;
+  const { details, photos, awards, similar, videos } = state;
+  const history = useHistory();
   const { id } = useParams();
 
-  const maxResolution = Math.max.apply(
-    null,
-    photos.images.map((p) => p.width)
-  );
+  const getBestPhoto = () => {
+    if (photos) {
+      const maxResolution = Math.max.apply(
+        null,
+        photos.images.map((p) => p.width)
+      );
 
-  const bestPhoto = photos.images.find((p) => p.width === maxResolution);
-
-  useEffect(() => {
-    if(id) {
-      getDetailesOnTitle(id, dispatch);
-      getPhotosOnTitle(id, dispatch);
-      getAwardsOnTitle(id, dispatch);
+      return photos.images.find((p) => p.width === maxResolution).url;
     }
-  }, [id, dispatch]);
 
-  if (!curDetails || !photos || !awards) return <div>Загрузка...</div>;
+    return "../../assets/images/nocover.png";
+  };
+
+  useEffect(() => id && tempSwitch(dispatch), [id, dispatch]);
+
+  // useEffect(() => id && getFullDetails(id, dispatch), [id, dispatch]);
+
+  // if (!id) return history.push("/");
+
+  const onModalOpen = () => {
+    if (!videos) return getVideosOnModal(id, dispatch);
+  };
+
+  if (!details || !photos || !awards || !similar) return <Loader />;
 
   return (
     <DetailsPageStyled>
@@ -201,26 +267,34 @@ export const DetailsPage = ({ state, dispatch }) => {
         </div>
       </HeaderSection>
 
-      <PreviewSection image={bestPhoto.url}>
+      <PreviewSection image={getBestPhoto()}>
         <div className="block">
-          <div className="block_label">{curDetails.title.title}</div>
+          <div className="block_label">{details.title.title}</div>
 
           <div className="block_tagline">
-            <RatingLabel rating={curDetails.ratings.rating} />
+            <RatingLabel rating={details.ratings.rating} />
 
-            <TagStyled>{curDetails.title.titleType}</TagStyled>
+            <TagStyled>{details.title.titleType}</TagStyled>
 
-            {curDetails.genres.map((genre) => (
+            {details.genres.map((genre) => (
               <TagStyled key={genre}>{genre}</TagStyled>
             ))}
 
-            <TagStyled>{curDetails.title.year}</TagStyled>
+            <TagStyled>{details.title.year}</TagStyled>
           </div>
         </div>
 
         <div className="block">
           <div className="block_buttons">
-            <Button title="Watch" />
+            <StyledPopup
+              trigger={<StyledButton>Watch</StyledButton>}
+              modal
+              lockScroll
+              closeOnDocumentClick
+              onOpen={onModalOpen}
+            >
+              {(close) => <Modal close={close} videos={videos} />}
+            </StyledPopup>
           </div>
 
           <div className="block_awards">
@@ -228,7 +302,7 @@ export const DetailsPage = ({ state, dispatch }) => {
               awards.awardsSummary.highlighted.awardName
             } | ${
               awards.awardsSummary.highlighted.count
-            } ${"Nominations"}`}{" "}
+            } ${"nominations"}`}{" "}
             <br />
             {`Another ${awards.awardsSummary.otherWinsCount} wins & ${awards.awardsSummary.otherNominationsCount} nominations`}
           </div>
@@ -238,18 +312,18 @@ export const DetailsPage = ({ state, dispatch }) => {
       <ExtendedSection>
         <div className="description">
           <div className="description_label">
-            {`Watch ${curDetails.title.title} on Richbee Shows`}
+            {`Watch ${details.title.title} on Richbee Shows`}
           </div>
 
-          <div className="description_text">{curDetails.plotSummary.text}</div>
+          <div className="description_text">{details.plotSummary.text}</div>
         </div>
 
         <div className="similar">
           <div className="similar_label">{model.detailsPage.similar}</div>
 
           <div className="similar_cards">
-            {[1, 2, 3, 4].map((data) => (
-              <SimilarCard key={data} />
+            {similar.map((data) => (
+              <SimilarCard key={data.title.id} data={data} />
             ))}
           </div>
         </div>

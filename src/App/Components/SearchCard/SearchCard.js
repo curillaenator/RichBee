@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import { RatingLabel } from "../RatingLabel/RatingLabel";
 import { colors } from "../../../ui";
+import nocover from "../../../assets/images/nocover.png";
 
 const LinkStyled = styled(Link)`
   display: flex;
@@ -81,17 +82,21 @@ const LinkStyled = styled(Link)`
 
 export const SearchCard = ({ data }) => {
   return (
-    <LinkStyled to={`/details/${data.id}`}>
-      <img className="cover" src={data.i ? data.i.imageUrl : ""} alt="Cover" />
+    <LinkStyled to={`/details/${data.imdbID}`}>
+      <img
+        className="cover"
+        src={!data.Poster || data.Poster === "N/A" ? nocover : data.Poster}
+        alt="Cover"
+      />
 
       <div className="info">
-        <div className="filmtitle">{data.l}</div>
-        <div className="tags">{`${data.q} | ${data.y}`}</div>
-        <div className="description">{data.s}</div>
+        <div className="filmtitle">{data.Title}</div>
+        <div className="tags">{`${data.Type} | ${data.Genre} | ${data.Year}`}</div>
+        <div className="description">{data.Awards}</div>
       </div>
 
       <div className="rating">
-        <RatingLabel rating="8.8" />
+        <RatingLabel rating={data.imdbRating} />
       </div>
     </LinkStyled>
   );

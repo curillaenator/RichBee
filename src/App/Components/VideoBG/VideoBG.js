@@ -8,6 +8,7 @@ const BgWrapper = styled.div`
   left: 0;
   width: 100vw;
   height: 100vh;
+  min-height: 860px;
   overflow: hidden;
 
   .scale {

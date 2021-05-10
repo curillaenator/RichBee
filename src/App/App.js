@@ -1,13 +1,10 @@
 import { useReducer } from "react";
-import { Route } from "react-router-dom";
-import styled from "styled-components";
+import { Switch, Route } from "react-router-dom";
 
 import { SearchPage } from "./SearchPage/SearchPage";
 import { DetailsPage } from "./DetailsPage/DetailsPage";
 
 import { appReducer, initialState } from "../Reducers/app";
-
-const AppContainer = styled.div``;
 
 export const App = () => {
   const [state, dispatch] = useReducer(appReducer, initialState);
@@ -15,7 +12,7 @@ export const App = () => {
   console.log(state);
 
   return (
-    <AppContainer>
+    <Switch>
       <Route
         exact
         path="/"
@@ -25,6 +22,6 @@ export const App = () => {
         path="/details/:id"
         render={() => <DetailsPage state={state} dispatch={dispatch} />}
       />
-    </AppContainer>
+    </Switch>
   );
 };

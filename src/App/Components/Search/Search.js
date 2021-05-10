@@ -36,8 +36,8 @@ const FormStyled = styled.form`
   }
 `;
 
-export const Search = ({ dispatch, colors, placeholder }) => {
-  const onSubmit = (searchData) => getDataOnSearch(searchData.search, dispatch);
+export const Search = ({ state, dispatch, colors, placeholder }) => {
+  const onSubmit = (searchData) => getDataOnSearch(searchData.search, state.search, dispatch);
 
   return (
     <Form

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { colors } from "../../../ui";
 
-const StyledButton = styled.button`
+export const StyledButton = styled.button`
   display: flex;
   align-items: center;
   height: 64px;
@@ -26,10 +26,3 @@ const StyledButton = styled.button`
     transform: scale3d(1, 1, 1);
   }
 `;
-
-export const Button = ({
-  title = "",
-  handler = () => console.log("emptyHandler"),
-}) => {
-  return <StyledButton onClick={handler}>{title}</StyledButton>;
-};

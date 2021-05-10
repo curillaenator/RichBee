@@ -2,10 +2,9 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import { RatingLabel } from "../RatingLabel/RatingLabel";
-
 import { colors } from "../../../ui";
 
-import card from "../../../assets/images/card.jpg";
+import nocover from "../../../assets/images/nocover.png";
 
 const CardStyled = styled(Link)`
   position: relative;
@@ -44,6 +43,9 @@ const CardStyled = styled(Link)`
       }
 
       &_genre {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         font-weight: 500;
         font-size: 14px;
         line-height: 17px;
@@ -112,25 +114,24 @@ const CardStyled = styled(Link)`
 `;
 
 export const SimilarCard = ({ data }) => {
+  const id = data.title.id.replace("/title/", "").replace("/", "");
+  const image = data.title.image ? data.title.image.url : nocover;
+
   return (
-    <CardStyled to="/">
+    <CardStyled to={`/details/${id}`}>
       <div className="cover_wrap">
-        <img className="cover_img" src={card} alt="" />
+        <img className="cover_img" src={image} alt="Cover" />
 
         <div className="hover">
-          <div className="hover_title">
-            Peaky Blinders Blinders Peaky Blinders
-          </div>
-          <div className="hover_jenre">Crime, Drama</div>
-          <div className="hover_type">TV Series 2013</div>
-          <div className="hover_description">
-            A gangster family epic set in 1900s England, centering on a gang who
-            sew razor blades in the peaks of their caps, and their fierce boss
-            Tommy Shelby. A gangster family epic set in 1900s England, centering
-            on a gang who sew razor blades in the peaks of their caps, and their
-            fierce boss Tommy Shelby.
-          </div>
-          <RatingLabel />
+          <div className="hover_title">{data.title.title}</div>
+
+          <div className="hover_genre">{data.genres.join(", ")}</div>
+
+          <div className="hover_type">{`${data.title.titleType} ${data.title.year}`}</div>
+
+          <div className="hover_description">{data.plotSummary.text}</div>
+
+          <RatingLabel rating={data.ratings.rating} />
         </div>
       </div>
     </CardStyled>
