@@ -62,7 +62,7 @@ const LinkStyled = styled(Link)`
       color: ${colors.fontWhiteFB};
     }
 
-    .description {
+    .awards {
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
@@ -91,8 +91,11 @@ export const SearchCard = ({ data }) => {
 
       <div className="info">
         <div className="filmtitle">{data.Title}</div>
-        <div className="tags">{`${data.Type} | ${data.Genre} | ${data.Year}`}</div>
-        <div className="description">{data.Awards}</div>
+        <div className="tags">{`${data.Type} | ${data.Genre.replace(
+          /,/g,
+          ""
+        )} | ${data.Year}`}</div>
+        <div className="awards">{data.Awards === "N/A" ? "" : data.Awards}</div>
       </div>
 
       <div className="rating">

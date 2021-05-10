@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { RatingLabel } from "../RatingLabel/RatingLabel";
 import { colors } from "../../../ui";
 
-import nocover from "../../../assets/images/nocover.png";
+// import nocover from "../../../assets/images/nocover.png";
 
 const CardStyled = styled(Link)`
   position: relative;
@@ -114,24 +114,21 @@ const CardStyled = styled(Link)`
 `;
 
 export const SimilarCard = ({ data }) => {
-  const id = data.title.id.replace("/title/", "").replace("/", "");
-  const image = data.title.image ? data.title.image.url : nocover;
-
   return (
-    <CardStyled to={`/details/${id}`}>
+    <CardStyled to={`/details/${data.imdbID}`}>
       <div className="cover_wrap">
-        <img className="cover_img" src={image} alt="Cover" />
+        <img className="cover_img" src={data.Poster} alt="Cover" />
 
         <div className="hover">
-          <div className="hover_title">{data.title.title}</div>
+          <div className="hover_title">{data.Title}</div>
 
-          <div className="hover_genre">{data.genres.join(", ")}</div>
+          <div className="hover_genre">{data.Genre}</div>
 
-          <div className="hover_type">{`${data.title.titleType} ${data.title.year}`}</div>
+          <div className="hover_type">{`${data.Type} ${data.Year}`}</div>
 
-          <div className="hover_description">{data.plotSummary.text}</div>
+          <div className="hover_description">{data.Plot}</div>
 
-          <RatingLabel rating={data.ratings.rating} />
+          <RatingLabel rating={data.imdbRating} />
         </div>
       </div>
     </CardStyled>

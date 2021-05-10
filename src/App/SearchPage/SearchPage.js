@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import { StyledButton } from "../Components/Buttons/Buttons";
+import { LoaderSmall } from "../Components/Loader/Loader";
 import { VideoBG } from "../Components/VideoBG/VideoBG";
 import { Search } from "../Components/Search/Search";
 import { SearchCard } from "../Components/SearchCard/SearchCard";
@@ -40,13 +41,18 @@ const SearchPageStyled = styled.div`
     z-index: 20;
   }
 
+  .results {
+    margin-bottom: 40px;
+    z-index: 20;
+  }
+
   .message {
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     color: ${colors.fontWhiteFE};
     z-index: 20;
   }
 
-  .results {
+  .loading {
     margin-bottom: 40px;
     z-index: 20;
   }
@@ -59,6 +65,8 @@ const SearchPageStyled = styled.div`
 `;
 
 export const SearchPage = ({ state, dispatch }) => {
+  const { isSearching, searchRes, searchResIDs, lastSearch, search } = state;
+
   return (
     <SearchPageStyled>
       <VideoBG />
@@ -74,41 +82,43 @@ export const SearchPage = ({ state, dispatch }) => {
         placeholder={model.searchPage.placeholder}
       />
 
-      {state.searchRes.length === 0 && state.lastSearch && (
+      {searchRes.length > 0 && (
+        <div className="results">
+          {searchRes.map((data) => (
+            <SearchCard key={data.imdbID} data={data} />
+          ))}
+        </div>
+      )}
+
+      {!isSearching && searchRes.length > 0 && (
+        <div className="message">
+          {searchRes.length < searchResIDs.length
+            ? `${searchRes.length} movies shown of ${searchResIDs.length} found`
+            : `All ${searchResIDs.length} results shown`}
+        </div>
+      )}
+
+      {!isSearching && lastSearch && searchRes.length === 0 && (
         <div className="message">Nothing found</div>
       )}
 
-      {state.searchRes.length > 0 && (
-        <>
-          <div className="message">{`${state.searchRes.length} shown of ${state.searchResIDs.length} found`}</div>
-
-          <div className="results">
-            {state.searchRes.map((data) => (
-              <SearchCard key={data.imdbID} data={data} />
-            ))}
-          </div>
-        </>
+      {isSearching && (
+        <div className="loading">
+          <LoaderSmall />
+        </div>
       )}
 
-      {state.searchRes.length !== state.searchResIDs.length && (
+      {searchRes.length > 0 && searchRes.length < searchResIDs.length && (
         <div className="buttons">
           <StyledButton
+            disabled={isSearching}
             onClick={() =>
-              getMoreSearchResults(
-                state.searchRes,
-                state.searchResIDs,
-                state.search,
-                dispatch
-              )
+              getMoreSearchResults(searchRes, searchResIDs, search, dispatch)
             }
           >
             Load more...
           </StyledButton>
         </div>
-      )}
-
-      {state.searchRes.length === state.searchResIDs.length && (
-        <div className="message">All results shown</div>
       )}
     </SearchPageStyled>
   );

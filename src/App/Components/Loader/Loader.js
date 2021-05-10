@@ -21,11 +21,38 @@ const LoaderStyled = styled.div`
   }
 `;
 
+const LoaderSmallStyled = styled.div`
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  height: 40px;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: ${colors.fontWhiteFB};
+
+  & > img {
+    width: 40px;
+    height: 40px:
+    margin-right: 8px;
+    object-fit: cover;
+  }
+`;
+
 export const Loader = () => {
   return (
     <LoaderStyled>
-      <img src={process} alt="Идет " />
-      <div>загрузка...</div>
+      <img src={process} alt="Now " />
+      <div>loading...</div>
     </LoaderStyled>
+  );
+};
+
+export const LoaderSmall = () => {
+  return (
+    <LoaderSmallStyled>
+      <img src={process} alt="Now " />
+      <div>loading...</div>
+    </LoaderSmallStyled>
   );
 };
