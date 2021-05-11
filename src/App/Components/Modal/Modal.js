@@ -44,8 +44,6 @@ const ModalStyled = styled.div`
 `;
 
 export const Modal = ({ close, title, link }) => {
-  // console.log(link);
-
   return (
     <ModalStyled>
       <TitleStyled>

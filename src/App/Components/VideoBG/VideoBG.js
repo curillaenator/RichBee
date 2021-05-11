@@ -15,8 +15,9 @@ const BgWrapper = styled.div`
     position: absolute;
     top: 0;
     left: 50%;
-    width: ${(props) => 1.78 * props.height}px;
-    height: ${(props) => props.height}px;
+    width: ${(props) =>
+      props.height > 830 ? 1.78 * props.height : 1.78 * 830}px;
+    height: ${(props) => (props.height > 830 ? props.height : 830)}px;
     transform: translateX(-50%) scale(1.35);
 
     .videoplayer {

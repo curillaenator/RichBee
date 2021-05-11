@@ -91,8 +91,6 @@ export const SearchCard = ({ data }) => {
         alt="Cover"
       />
 
-      {/* {data.Response === "True" && (
-        <> */}
       <div className="info">
         <div className="filmtitle">{data.Title}</div>
         <div className="tags">{`${data.Type} | ${data.Genre} | ${data.Year}`}</div>
@@ -102,14 +100,6 @@ export const SearchCard = ({ data }) => {
       <div className="rating">
         <RatingLabel rating={data.imdbRating} />
       </div>
-      {/* </>
-      )} */}
-
-      {/* {data.Response === "False" && (
-        <div className="info">
-          <div className="filmtitle">No data</div>
-        </div>
-      )} */}
     </LinkStyled>
   );
 };

@@ -90,7 +90,7 @@ export const SearchPage = ({ state, dispatch }) => {
       />
 
       {!isSearching && lastSearch && (
-        <div className="searchedfor">{`Reaults shown for your search "${lastSearch}"`}</div>
+        <div className="searchedfor">{`${model.searchPage.userQueryWas} "${lastSearch}"`}</div>
       )}
 
       {searchRes.length > 0 && (
@@ -104,13 +104,13 @@ export const SearchPage = ({ state, dispatch }) => {
       {!isSearching && searchRes.length > 0 && (
         <div className="message">
           {searchRes.length < searchResIDs.length
-            ? "Click button to see more"
-            : `All results shown`}
+            ? `${model.searchPage.seeMore}`
+            : `${model.searchPage.allShown}`}
         </div>
       )}
 
       {!isSearching && lastSearch && searchRes.length === 0 && (
-        <div className="message">Nothing found</div>
+        <div className="message">{model.searchPage.noResults}</div>
       )}
 
       {isSearching && (

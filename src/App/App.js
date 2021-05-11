@@ -9,8 +9,6 @@ import { appReducer, initialState } from "../Reducers/app";
 export const App = () => {
   const [state, dispatch] = useReducer(appReducer, initialState);
 
-  console.log(state);
-
   return (
     <Switch>
       <Route

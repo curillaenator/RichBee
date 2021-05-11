@@ -22,7 +22,10 @@ export const model = {
     title: "Unlimited movies, TV shows, and more.",
     subtitle: "Watch anywhere. Cancel anytime.",
     placeholder: "Type here smth...",
-    found: "results shown for",
+    userQueryWas: "Results shown for your search",
+    seeMore: "Click button to see more",
+    allShown: "All results shown",
+    noResults: "NothingFound",
   },
   detailsPage: {
     similar: "You may also like",

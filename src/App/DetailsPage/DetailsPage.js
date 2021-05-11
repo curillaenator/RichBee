@@ -244,6 +244,7 @@ export const DetailsPage = ({ state, dispatch }) => {
         <div className="header_title" onClick={() => history.push("/")}>
           Richbee Shows
         </div>
+
         <div className="header_search">
           <img src={mglass} alt="" />
           <p>Type here smth...</p>

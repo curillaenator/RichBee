@@ -4,8 +4,6 @@ import styled from "styled-components";
 import { RatingLabel } from "../RatingLabel/RatingLabel";
 import { colors } from "../../../ui";
 
-// import nocover from "../../../assets/images/nocover.png";
-
 const CardStyled = styled(Link)`
   position: relative;
   cursor: pointer;

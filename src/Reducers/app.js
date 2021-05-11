@@ -20,7 +20,7 @@ export const initialState = {
   },
   searchResIDs: [],
   searchRes: [],
-  details: [],
+  details: null,
 };
 
 export const appReducer = (state, action) => {
