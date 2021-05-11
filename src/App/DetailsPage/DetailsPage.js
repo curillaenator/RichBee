@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { Redirect, useParams, useHistory } from "react-router-dom";
 import Popup from "reactjs-popup";
 import styled, { keyframes } from "styled-components";
 
-import { getTitleMeta, tempSwitch } from "../../Reducers/app";
+import { getTitle, tempSwitch } from "../../Reducers/app";
 
 import { Loader } from "../Components/Loader/Loader";
 import { StyledButton } from "../Components/Buttons/Buttons";
@@ -14,8 +14,6 @@ import { SimilarCard } from "../Components/SimilarCard/SimilarCard";
 import { model, colors } from "../../ui";
 
 import mglass from "../../assets/icons/mglass.svg";
-
-// import tmpimg from "../../assets/images/tmp.jpg";
 
 // ANIMATIONS
 
@@ -51,7 +49,7 @@ const StyledPopup = styled(Popup)`
   }
 
   &-content {
-    width: 70%;
+    width: fit-content;
     padding: 24px;
     border-radius: 16px;
     background-color: ${colors.cardActive};
@@ -70,6 +68,16 @@ const HeaderSection = styled.section`
     font-weight: 300;
     line-height: 29px;
     color: ${colors.fontWhiteFE};
+    transition: 0.08s linear;
+    cursor: pointer;
+
+    &:hover {
+      transform: scale(1.04);
+    }
+
+    &:active {
+      transform: scale(1);
+    }
   }
 
   .header_search {
@@ -109,7 +117,7 @@ const PreviewSection = styled.section`
 
   .block {
     &_label {
-      max-width: 70%;
+      width: 70%;
       min-width: 555px;
       margin-bottom: 30px;
       font-size: 72px;
@@ -128,8 +136,8 @@ const PreviewSection = styled.section`
     }
 
     &_awards {
-      max-width: calc(100% / 2);
-      min-width: 400px;
+      width: 70%;
+      min-width: 555px;
       font-size: 18px;
       font-weight: 600;
       line-height: 22px;
@@ -143,8 +151,7 @@ const ExtendedSection = styled.section`
   background-color: ${colors.bgWhite};
 
   .description {
-    width: 100%;
-    max-width: 800px;
+    width: 70%;
     min-width: 555px;
     margin-bottom: 60px;
     color: ${colors.fontBlack};
@@ -165,8 +172,7 @@ const ExtendedSection = styled.section`
 
   .similar {
     &_label {
-      width: 100%;
-      max-width: 800px;
+      width: 70%;
       min-width: 555px;
       margin-bottom: 19px;
       font-weight: 900;
@@ -202,46 +208,62 @@ const DetailsPageStyled = styled.div`
 // MAIN COMPONENT
 
 export const DetailsPage = ({ state, dispatch }) => {
-  const { details, similar, videos } = state;
+  const { details } = state;
   const history = useHistory();
   const { id } = useParams();
 
-  // useEffect(() => id && tempSwitch(dispatch), [id, dispatch]);
-
-  useEffect(() => id && getTitleMeta(id, dispatch), [id, dispatch]);
-
-  // if (!id) return history.push("/");
-
-  const onModalOpen = () => {
-    // if (!videos) return getVideosOnModal(id, dispatch);
+  const getBackdrop = (backdrops) => {
+    return backdrops[Math.floor(Math.random() * backdrops.length)].link;
   };
 
-  if (!details || !similar) return <Loader />;
+  // useEffect(() => {
+  //   window.scrollTo({
+  //     top: 0,
+  //     behavior: "instant",
+  //   });
+
+  //   (id || id !== "undefined") && tempSwitch(dispatch);
+  // }, [id, dispatch]);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "instant",
+    });
+
+    (id || id !== "undefined") && getTitle(id, dispatch);
+  }, [id, dispatch]);
+
+  if (!id || id === "undefined") return <Redirect to="/" />;
+
+  if (!details) return <Loader />;
 
   return (
     <DetailsPageStyled>
       <HeaderSection>
-        <div className="header_title">Richbee Shows</div>
+        <div className="header_title" onClick={() => history.push("/")}>
+          Richbee Shows
+        </div>
         <div className="header_search">
           <img src={mglass} alt="" />
           <p>Type here smth...</p>
         </div>
       </HeaderSection>
 
-      <PreviewSection image={details.Poster}>
+      <PreviewSection image={getBackdrop(details.posters.backdrops)}>
         <div className="block">
-          <div className="block_label">{details.Title}</div>
+          <div className="block_label">{details.title}</div>
 
           <div className="block_tagline">
-            <RatingLabel rating={details.imdbRating} />
+            <RatingLabel rating={details.imDbRating} />
 
-            <TagStyled>{details.Type}</TagStyled>
+            <TagStyled>{details.type}</TagStyled>
 
-            {details.Genre.split(", ").map((genre) => (
+            {details.genres.split(", ").map((genre) => (
               <TagStyled key={genre}>{genre}</TagStyled>
             ))}
 
-            <TagStyled>{details.Year}</TagStyled>
+            <TagStyled>{details.year}</TagStyled>
           </div>
         </div>
 
@@ -252,31 +274,36 @@ export const DetailsPage = ({ state, dispatch }) => {
               modal
               lockScroll
               closeOnDocumentClick
-              onOpen={onModalOpen}
             >
-              {(close) => <Modal close={close} videos={videos} />}
+              {(close) => (
+                <Modal
+                  close={close}
+                  link={details.trailer.linkEmbed}
+                  title={details.fullTitle}
+                />
+              )}
             </StyledPopup>
           </div>
 
-          <div className="block_awards">{details.Awards}</div>
+          <div className="block_awards">{details.awards}</div>
         </div>
       </PreviewSection>
 
       <ExtendedSection>
         <div className="description">
           <div className="description_label">
-            {`Watch ${details.Title} on Richbee Shows`}
+            {`Watch ${details.title} on Richbee Shows`}
           </div>
 
-          <div className="description_text">{details.Plot}</div>
+          <div className="description_text">{details.plot}</div>
         </div>
 
         <div className="similar">
           <div className="similar_label">{model.detailsPage.similar}</div>
 
           <div className="similar_cards">
-            {similar.map((data) => (
-              <SimilarCard key={data.imdbID} data={data} />
+            {details.similars.slice(0, 4).map((data) => (
+              <SimilarCard key={data.id} data={data} />
             ))}
           </div>
         </div>

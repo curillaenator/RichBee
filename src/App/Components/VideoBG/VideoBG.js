@@ -6,8 +6,8 @@ const BgWrapper = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   min-height: 860px;
   overflow: hidden;
 
@@ -56,7 +56,7 @@ export const VideoBG = () => {
           url="https://www.youtube.com/watch?v=gA0nQyDZR4A"
           width="100%"
           height="100%"
-          // playing
+          playing
           muted
           loop
           config={{

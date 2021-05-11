@@ -81,6 +81,8 @@ const LinkStyled = styled(Link)`
 `;
 
 export const SearchCard = ({ data }) => {
+  if (data.Response === "False") return <div></div>;
+
   return (
     <LinkStyled to={`/details/${data.imdbID}`}>
       <img
@@ -89,18 +91,25 @@ export const SearchCard = ({ data }) => {
         alt="Cover"
       />
 
+      {/* {data.Response === "True" && (
+        <> */}
       <div className="info">
         <div className="filmtitle">{data.Title}</div>
-        <div className="tags">{`${data.Type} | ${data.Genre.replace(
-          /,/g,
-          ""
-        )} | ${data.Year}`}</div>
+        <div className="tags">{`${data.Type} | ${data.Genre} | ${data.Year}`}</div>
         <div className="awards">{data.Awards === "N/A" ? "" : data.Awards}</div>
       </div>
 
       <div className="rating">
         <RatingLabel rating={data.imdbRating} />
       </div>
+      {/* </>
+      )} */}
+
+      {/* {data.Response === "False" && (
+        <div className="info">
+          <div className="filmtitle">No data</div>
+        </div>
+      )} */}
     </LinkStyled>
   );
 };

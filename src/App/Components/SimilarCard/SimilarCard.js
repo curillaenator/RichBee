@@ -115,20 +115,20 @@ const CardStyled = styled(Link)`
 
 export const SimilarCard = ({ data }) => {
   return (
-    <CardStyled to={`/details/${data.imdbID}`}>
+    <CardStyled to={`/details/${data.id}`}>
       <div className="cover_wrap">
-        <img className="cover_img" src={data.Poster} alt="Cover" />
+        <img className="cover_img" src={data.image} alt="Cover" />
 
         <div className="hover">
-          <div className="hover_title">{data.Title}</div>
+          <div className="hover_title">{data.title}</div>
 
-          <div className="hover_genre">{data.Genre}</div>
+          <div className="hover_genre">{data.genres}</div>
 
-          <div className="hover_type">{`${data.Type} ${data.Year}`}</div>
+          <div className="hover_type">{data.year}</div>
 
-          <div className="hover_description">{data.Plot}</div>
+          <div className="hover_description">{data.plot}</div>
 
-          <RatingLabel rating={data.imdbRating} />
+          <RatingLabel rating={data.imDbRating} />
         </div>
       </div>
     </CardStyled>

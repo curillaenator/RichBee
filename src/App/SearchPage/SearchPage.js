@@ -16,6 +16,7 @@ const SearchPageStyled = styled.div`
   align-items: center;
   position: relative;
   width: 100vw;
+  min-height: 930px;
   padding: 22vh 0;
   background-color: ${colors.bgDark};
 
@@ -37,6 +38,12 @@ const SearchPageStyled = styled.div`
     font-size: 36px;
     line-height: 52px;
     text-align: center;
+    color: ${colors.fontWhiteFE};
+    z-index: 20;
+  }
+
+  .searchedfor {
+    margin-bottom: 20px;
     color: ${colors.fontWhiteFE};
     z-index: 20;
   }
@@ -82,10 +89,14 @@ export const SearchPage = ({ state, dispatch }) => {
         placeholder={model.searchPage.placeholder}
       />
 
+      {!isSearching && lastSearch && (
+        <div className="searchedfor">{`Reaults shown for your search "${lastSearch}"`}</div>
+      )}
+
       {searchRes.length > 0 && (
         <div className="results">
-          {searchRes.map((data) => (
-            <SearchCard key={data.imdbID} data={data} />
+          {searchRes.map((data, i) => (
+            <SearchCard key={i} data={data} />
           ))}
         </div>
       )}
@@ -93,8 +104,8 @@ export const SearchPage = ({ state, dispatch }) => {
       {!isSearching && searchRes.length > 0 && (
         <div className="message">
           {searchRes.length < searchResIDs.length
-            ? `${searchRes.length} movies shown of ${searchResIDs.length} found`
-            : `All ${searchResIDs.length} results shown`}
+            ? "Click button to see more"
+            : `All results shown`}
         </div>
       )}
 

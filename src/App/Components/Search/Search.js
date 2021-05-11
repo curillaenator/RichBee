@@ -37,18 +37,21 @@ const FormStyled = styled.form`
 `;
 
 export const Search = ({ state, dispatch, colors, placeholder }) => {
-  const onSubmit = (searchData) => getDataOnSearch(searchData.search, state.search, dispatch);
+  const onSubmit = (searchData) =>
+    getDataOnSearch(searchData.search, state.search, dispatch);
 
   return (
     <Form
       onSubmit={onSubmit}
       render={({ handleSubmit, form, values }) => {
+        const submitHandler = (e) => {
+          e.preventDefault();
+          form.submit();
+          form.reset();
+        };
+
         return (
-          <FormStyled
-            onSubmit={handleSubmit}
-            height={50}
-            colors={colors}
-          >
+          <FormStyled onSubmit={handleSubmit} height={50} colors={colors}>
             <Field
               name="search"
               component="input"
@@ -57,7 +60,9 @@ export const Search = ({ state, dispatch, colors, placeholder }) => {
               placeholder={placeholder}
             />
 
-            <button className="button">Search</button>
+            <button className="button" onClick={submitHandler}>
+              Search
+            </button>
           </FormStyled>
         );
       }}
