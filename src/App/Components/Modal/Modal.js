@@ -59,7 +59,7 @@ export const Modal = ({ close, title, link }) => {
             src={`${link}?autoplay=false&width=854`}
             width="854"
             height="480"
-            allowFullScreen="true"
+            allowFullScreen={true}
             frameBorder="no"
             scrolling="no"
           ></iframe>
