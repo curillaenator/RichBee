@@ -1,7 +1,7 @@
 import { api } from "../utils/api";
 import axios from "axios";
 
-import { response } from "../utils/tmp";
+// import { response } from "../utils/tmp";
 
 // REDUCER
 
@@ -136,12 +136,12 @@ export const getTitle = async (id, dispatch) => {
     .catch((err) => console.error(err));
 };
 
-export const tempSwitch = (dispatch) => {
-  dispatch(setDetails(null));
+// export const tempSwitch = (dispatch) => {
+//   dispatch(setDetails(null));
 
-  const delayed = () => {
-    dispatch(setDetails(response));
-  };
+//   const delayed = () => {
+//     dispatch(setDetails(response));
+//   };
 
-  setTimeout(delayed, 2000);
-};
+//   setTimeout(delayed, 2000);
+// };

@@ -3,7 +3,7 @@ import { Redirect, useParams, useHistory } from "react-router-dom";
 import Popup from "reactjs-popup";
 import styled, { keyframes } from "styled-components";
 
-import { getTitle, tempSwitch } from "../../Reducers/app";
+import { getTitle } from "../../Reducers/app"; // tempSwitch
 
 import { Loader } from "../Components/Loader/Loader";
 import { StyledButton } from "../Components/Buttons/Buttons";
