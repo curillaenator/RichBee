@@ -1,12 +1,13 @@
+import React, { FC, Dispatch } from "react";
 import styled from "styled-components";
 
-import { StyledButton } from "../Components/Buttons/Buttons";
+// import { StyledButton } from "../Components/Buttons/Buttons";
 import { LoaderSmall } from "../Components/Loader/Loader";
 import { VideoBG } from "../Components/VideoBG/VideoBG";
 import { Search } from "../Components/Search/Search";
 import { SearchCard } from "../Components/SearchCard/SearchCard";
 
-import { getMoreSearchResults } from "../../Reducers/app";
+import { IS } from "../../Reducers/app"; // getMoreSearchResults
 
 import { model, colors } from "../../ui";
 
@@ -71,8 +72,13 @@ const SearchPageStyled = styled.div`
   }
 `;
 
-export const SearchPage = ({ state, dispatch }) => {
-  const { isSearching, searchRes, searchResIDs, lastSearch, search } = state;
+interface SearchPageProps {
+  state: IS;
+  dispatch: Dispatch<any>;
+}
+
+export const SearchPage: FC<SearchPageProps> = ({ state, dispatch }) => {
+  const { isSearching, searchRes, lastSearch } = state;
 
   return (
     <SearchPageStyled>
@@ -82,12 +88,7 @@ export const SearchPage = ({ state, dispatch }) => {
 
       <div className="subtitle">{model.searchPage.subtitle}</div>
 
-      <Search
-        state={state}
-        dispatch={dispatch}
-        colors={colors}
-        placeholder={model.searchPage.placeholder}
-      />
+      <Search dispatch={dispatch} />
 
       {!isSearching && lastSearch && (
         <div className="searchedfor">{`${model.searchPage.userQueryWas} "${lastSearch}"`}</div>
@@ -101,13 +102,13 @@ export const SearchPage = ({ state, dispatch }) => {
         </div>
       )}
 
-      {!isSearching && searchRes.length > 0 && (
+      {/* {!isSearching && searchRes.length > 0 && (
         <div className="message">
           {searchRes.length < searchResIDs.length
             ? `${model.searchPage.seeMore}`
             : `${model.searchPage.allShown}`}
         </div>
-      )}
+      )} */}
 
       {!isSearching && lastSearch && searchRes.length === 0 && (
         <div className="message">{model.searchPage.noResults}</div>
@@ -119,7 +120,7 @@ export const SearchPage = ({ state, dispatch }) => {
         </div>
       )}
 
-      {searchRes.length > 0 && searchRes.length < searchResIDs.length && (
+      {/* {searchRes.length > 0 && searchRes.length < searchResIDs.length && (
         <div className="buttons">
           <StyledButton
             disabled={isSearching}
@@ -130,7 +131,7 @@ export const SearchPage = ({ state, dispatch }) => {
             Load more...
           </StyledButton>
         </div>
-      )}
+      )} */}
     </SearchPageStyled>
   );
 };

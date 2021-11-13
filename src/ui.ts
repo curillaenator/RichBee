@@ -17,6 +17,8 @@ export const colors = {
   cardActive: "#302c2cd9",
 };
 
+export type Colors = typeof colors;
+
 export const model = {
   searchPage: {
     title: "Unlimited movies, TV shows, and more.",

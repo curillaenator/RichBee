@@ -1,3 +1,4 @@
+import React from "react";
 import styled from "styled-components";
 import process from "../../../assets/images/process.svg";
 import { colors } from "../../../ui";
@@ -15,7 +16,7 @@ const LoaderStyled = styled.div`
 
   & > img {
     width: 40px;
-    height: 40px:
+    height: 40px;
     margin-right: 8px;
     object-fit: cover;
   }
@@ -33,7 +34,7 @@ const LoaderSmallStyled = styled.div`
 
   & > img {
     width: 40px;
-    height: 40px:
+    height: 40px;
     margin-right: 8px;
     object-fit: cover;
   }
@@ -42,7 +43,7 @@ const LoaderSmallStyled = styled.div`
 export const Loader = () => {
   return (
     <LoaderStyled>
-      <img src={process} alt="Now " />
+      <img src={process} alt="Now" />
       <div>loading...</div>
     </LoaderStyled>
   );

@@ -1,4 +1,4 @@
-// import { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 import { colors } from "../../../ui";
@@ -23,7 +23,7 @@ const TitleStyled = styled.div`
       transform: scale(1.2);
     }
 
-    &: active {
+    &:active {
       transform: scale(1);
     }
   }

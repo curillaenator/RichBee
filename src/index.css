@@ -1,5 +1,3 @@
-@import "./pallete.scss";
-
 *,
 *::before,
 *::after {
@@ -17,8 +15,8 @@ html {
 }
 
 body {
-  color: $fontBlack;
-  background-color: $bgDark;
+  color: #323232;
+  background-color: #111111;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -33,13 +31,13 @@ button {
 input {
   border: none;
   outline: none;
+}
 
-  &::placeholder {
-    color: $fontPlaceholder;
-    transition: 0.12s linear;
-  }
+input::placeholder {
+  color: #cccccc;
+  transition: 0.12s linear;
+}
 
-  &:focus::placeholder {
-    opacity: 0;
-  }
+input:focus::placeholder {
+  opacity: 0;
 }

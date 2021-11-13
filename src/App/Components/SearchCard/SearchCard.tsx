@@ -1,7 +1,10 @@
+import React, { FC } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-import { RatingLabel } from "../RatingLabel/RatingLabel";
+import { ResultItem } from "../../../Reducers/app";
+
+// import { RatingLabel } from "../RatingLabel/RatingLabel";
 import { colors } from "../../../ui";
 import nocover from "../../../assets/images/nocover.png";
 
@@ -80,26 +83,32 @@ const LinkStyled = styled(Link)`
   }
 `;
 
-export const SearchCard = ({ data }) => {
-  if (data.Response === "False") return <div></div>;
+interface SearchCardProps {
+  data: ResultItem;
+}
+
+export const SearchCard: FC<SearchCardProps> = ({ data }) => {
+  // if (data.Response === "False") return <div></div>;
 
   return (
-    <LinkStyled to={`/details/${data.imdbID}`}>
+    <LinkStyled to={`/details/${data.id}`}>
       <img
         className="cover"
-        src={!data.Poster || data.Poster === "N/A" ? nocover : data.Poster}
+        src={!data.image || data.image === "N/A" ? nocover : data.image}
         alt="Cover"
       />
 
       <div className="info">
-        <div className="filmtitle">{data.Title}</div>
-        <div className="tags">{`${data.Type} | ${data.Genre} | ${data.Year}`}</div>
-        <div className="awards">{data.Awards === "N/A" ? "" : data.Awards}</div>
+        <div className="filmtitle">{data.title}</div>
+
+        <div className="tags">{data.description}</div>
+        {/* <div className="tags">{`${data.Type} | ${data.Genre} | ${data.Year}`}</div>
+        <div className="awards">{data.Awards === "N/A" ? "" : data.Awards}</div> */}
       </div>
 
-      <div className="rating">
-        <RatingLabel rating={data.imdbRating} />
-      </div>
+      {/* <div className="rating">
+        <RatingLabel rating="9" />
+      </div> */}
     </LinkStyled>
   );
 };
