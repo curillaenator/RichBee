@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/static/css/main.a2689c4e.chunk.css",
-    "main.js": "/static/js/main.8f31481f.chunk.js",
-    "main.js.map": "/static/js/main.8f31481f.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.48ea7090.js",
-    "runtime-main.js.map": "/static/js/runtime-main.48ea7090.js.map",
-    "static/js/2.0092d5f6.chunk.js": "/static/js/2.0092d5f6.chunk.js",
-    "static/js/2.0092d5f6.chunk.js.map": "/static/js/2.0092d5f6.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.85b8d722b9f2d678850f4ce0dae1e02d.js": "/precache-manifest.85b8d722b9f2d678850f4ce0dae1e02d.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/main.a2689c4e.chunk.css.map": "/static/css/main.a2689c4e.chunk.css.map",
-    "static/js/2.0092d5f6.chunk.js.LICENSE.txt": "/static/js/2.0092d5f6.chunk.js.LICENSE.txt",
-    "static/media/cross.svg": "/static/media/cross.f2a01c3d.svg",
-    "static/media/mglass.svg": "/static/media/mglass.c64c1210.svg",
-    "static/media/nocover.png": "/static/media/nocover.18b858f1.png",
-    "static/media/process.svg": "/static/media/process.ea036f5d.svg"
+    "main.css": "/RichBee/static/css/main.a2689c4e.chunk.css",
+    "main.js": "/RichBee/static/js/main.8f31481f.chunk.js",
+    "main.js.map": "/RichBee/static/js/main.8f31481f.chunk.js.map",
+    "runtime-main.js": "/RichBee/static/js/runtime-main.9ebb09af.js",
+    "runtime-main.js.map": "/RichBee/static/js/runtime-main.9ebb09af.js.map",
+    "static/js/2.fefa7ef9.chunk.js": "/RichBee/static/js/2.fefa7ef9.chunk.js",
+    "static/js/2.fefa7ef9.chunk.js.map": "/RichBee/static/js/2.fefa7ef9.chunk.js.map",
+    "index.html": "/RichBee/index.html",
+    "precache-manifest.247e78829e9115b222ff25657771d850.js": "/RichBee/precache-manifest.247e78829e9115b222ff25657771d850.js",
+    "service-worker.js": "/RichBee/service-worker.js",
+    "static/css/main.a2689c4e.chunk.css.map": "/RichBee/static/css/main.a2689c4e.chunk.css.map",
+    "static/js/2.fefa7ef9.chunk.js.LICENSE.txt": "/RichBee/static/js/2.fefa7ef9.chunk.js.LICENSE.txt",
+    "static/media/cross.svg": "/RichBee/static/media/cross.f2a01c3d.svg",
+    "static/media/mglass.svg": "/RichBee/static/media/mglass.c64c1210.svg",
+    "static/media/nocover.png": "/RichBee/static/media/nocover.18b858f1.png",
+    "static/media/process.svg": "/RichBee/static/media/process.ea036f5d.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.48ea7090.js",
-    "static/js/2.0092d5f6.chunk.js",
+    "static/js/runtime-main.9ebb09af.js",
+    "static/js/2.fefa7ef9.chunk.js",
     "static/css/main.a2689c4e.chunk.css",
     "static/js/main.8f31481f.chunk.js"
   ]
