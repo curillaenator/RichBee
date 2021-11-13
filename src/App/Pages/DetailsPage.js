@@ -102,10 +102,6 @@ const HeaderSection = styled.section`
   }
 `;
 
-// interface PreviewSectionProps {
-//   image: string;
-// }
-
 const PreviewSection = styled.section`
   display: flex;
   flex-direction: column;
@@ -212,15 +208,9 @@ const DetailsPageStyled = styled.div`
 
 // MAIN COMPONENT
 
-// interface DetailsPageProps {
-//   state: IS;
-//   dispatch: Dispatch<any>;
-// }
-
 export const DetailsPage = ({ state, dispatch }) => {
   const { details } = state;
   const history = useHistory();
-  //@ts-ignore
   const { id } = useParams();
 
   const getBackdrop = (backdrops) => {
@@ -230,7 +220,7 @@ export const DetailsPage = ({ state, dispatch }) => {
   useEffect(() => {
     window.scrollTo({
       top: 0,
-      // behavior: "instant",
+      behavior: "instant",
     });
 
     (id || id !== "undefined") && getTitle(id, dispatch);

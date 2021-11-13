@@ -19,17 +19,11 @@ export interface IS {
   isSearching: boolean;
   searchRes: ResultItem[];
   details: any;
-
-  search: any;
 }
 
 export const initialState: IS = {
   lastSearch: "",
   isSearching: false,
-  search: {
-    q: 10,
-    page: 1,
-  },
   searchRes: [],
   details: null,
 };
@@ -79,15 +73,6 @@ const setDetails: Action<IS["details"]> = (payload) => ({
 
 // REQUESTS
 
-// const alt = {
-//   method: "GET",
-//   url: "https://movie-database-imdb-alternative.p.rapidapi.com/",
-//   headers: {
-//     "x-rapidapi-key": "bf0cc8809fmsh7ea2aa3b64ea954p18a4d1jsne0cc0aff369e",
-//     "x-rapidapi-host": "movie-database-imdb-alternative.p.rapidapi.com",
-//   },
-// };
-
 type GetSearchResults = (text: string, dispatch: Dispatch<any>) => void;
 
 export const getDataOnSearch: GetSearchResults = (text, dispatch) => {
@@ -104,34 +89,6 @@ export const getDataOnSearch: GetSearchResults = (text, dispatch) => {
   });
 };
 
-// export const getMoreSearchResults = (
-//   searchRes,
-//   searchResIDs,
-//   search,
-//   dispatch
-// ) => {
-//   dispatch(setIsSearching(true));
-
-//   const idsBunch = searchResIDs.slice(
-//     searchRes.length,
-//     searchRes.length + search.q
-//   );
-
-//   const dataRequest = (titleID) => {
-//     return axios
-//       .request({ ...alt, params: { i: titleID, r: "json" } })
-//       .then((res) => res.data)
-//       .catch((err) => console.error(err));
-//   };
-
-//   const pagePromise = idsBunch.map((titleID) => dataRequest(titleID));
-
-//   Promise.all(pagePromise).then((page) => {
-//     dispatch(setSearchRes([...searchRes, ...page]));
-//     dispatch(setIsSearching(false));
-//   });
-// };
-
 type GetTitle = (id: string, dispatch: Dispatch<any>) => void;
 
 export const getTitle: GetTitle = async (id, dispatch) => {
@@ -142,13 +99,3 @@ export const getTitle: GetTitle = async (id, dispatch) => {
     .then((title) => dispatch(setDetails(title)))
     .catch((err) => console.error(err));
 };
-
-// export const tempSwitch = (dispatch) => {
-//   dispatch(setDetails(null));
-
-//   const delayed = () => {
-//     dispatch(setDetails(response));
-//   };
-
-//   setTimeout(delayed, 2000);
-// };

@@ -1,8 +1,8 @@
 import React, { FC, useReducer } from "react";
 import { Switch, Route } from "react-router-dom";
 
-import { SearchPage } from "./SearchPage/SearchPage";
-import { DetailsPage } from "./DetailsPage/DetailsPage";
+import { SearchPage } from "./Pages/SearchPage";
+import { DetailsPage } from "./Pages/DetailsPage";
 
 import { appReducer, initialState } from "../Reducers/app";
 
