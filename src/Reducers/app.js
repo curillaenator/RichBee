@@ -78,6 +78,8 @@ export const getDataOnSearch = (text, search, dispatch) => {
   };
 
   api.searchTitle(text).then((res) => {
+    console.log(res);
+
     if (res.results && res.results.length > 0) {
       dispatch(setSearchResIDS(res.results.map((ttl) => ttl.id)));
 

@@ -9,6 +9,7 @@ export const api = {
       .get(`SearchTitle/${key}/${title}`)
       .then((r) => r.data)
       .catch((err) => console.error(err)),
+
   getTitle: (titleID) =>
     base
       .get(`Title/${key}/${titleID}/Posters,Images,Trailer,Ratings`)
